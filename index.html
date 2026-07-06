@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Morbert Engenharia — Construções e Reformas. Qualidade, segurança e excelência em cada projeto.">
+  <title>Morbert Engenharia | Construções e Reformas</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: { DEFAULT: '#c9a227', light: '#e8c547', dark: '#9a7b1a' },
+            dark: { DEFAULT: '#0f0f0f', soft: '#1a1a1a' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos customizados -->
+  <style>
+    :root {
+      --gold: #c9a227;
+      --gold-light: #e8c547;
+      --gold-dark: #9a7b1a;
+      --dark: #0f0f0f;
+      --dark-soft: #1a1a1a;
+      --gray: #6b7280;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .header-scrolled {
+      background-color: rgba(15, 15, 15, 0.97);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-link {
+      position: relative;
+      color: #e5e5e5;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--gold-light);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    .carousel {
+      position: relative;
+      height: 100vh;
+      min-height: 500px;
+      max-height: 900px;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.7s ease-in-out;
+    }
+
+    .carousel-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .carousel-overlay {
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 15, 15, 0.55) 0%,
+        rgba(15, 15, 15, 0.35) 40%,
+        rgba(15, 15, 15, 0.75) 100%
+      );
+    }
+
+    .carousel-content {
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .carousel-btn {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(201, 162, 39, 0.4);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-btn:hover {
+      background: rgba(201, 162, 39, 0.3);
+      border-color: var(--gold);
+    }
+
+    .carousel-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--gold);
+      transform: scale(1.3);
+    }
+
+    .carousel-dot:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: var(--dark);
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(201, 162, 39, 0.3);
+    }
+
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(201, 162, 39, 0.45);
+    }
+
+    .btn-outline-gold {
+      border: 2px solid var(--gold);
+      color: var(--gold-light);
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-gold:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    .service-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(201, 162, 39, 0.15);
+    }
+
+    .service-card.reveal-item.visible:hover {
+      transform: translateY(-6px);
+    }
+
+    .service-icon {
+      background: linear-gradient(135deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.05));
+      border: 1px solid rgba(201, 162, 39, 0.3);
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      margin: 12px auto 0;
+    }
+
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-menu.open {
+      transform: translateX(0);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .social-icon {
+      width: 4.25rem;
+      height: 4.25rem;
+      object-fit: contain;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .social-icon:hover {
+      transform: scale(1.1);
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body class="bg-dark text-gray-200 antialiased">
+
+  <!-- ========== HEADER ========== -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+
+        <!-- Logo -->
+        <a href="#home" class="flex-shrink-0">
+          <img src="imagens/logotrans.png" alt="Morbert Engenharia" class="h-14 w-auto">
+        </a>
+
+        <!-- Navegação desktop -->
+        <nav class="hidden md:flex items-center gap-8" aria-label="Menu principal">
+          <a href="#home" class="nav-link text-sm font-medium tracking-wide">Home</a>
+          <a href="#sobre" class="nav-link text-sm font-medium tracking-wide">Sobre</a>
+          <a href="#servicos" class="nav-link text-sm font-medium tracking-wide">Serviços</a>
+          <a href="#diferenciais" class="nav-link text-sm font-medium tracking-wide">Diferenciais</a>
+          <a href="#contato" class="nav-link text-sm font-medium tracking-wide">Contato</a>
+        </nav>
+
+        <!-- CTA desktop -->
+        <a href="https://wa.me/554789181395?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex btn-gold px-5 py-2.5 rounded-lg text-sm">
+          Solicitar Orçamento
+        </a>
+
+        <!-- Botão menu mobile -->
+        <button id="menu-btn" class="md:hidden text-white p-2" aria-label="Abrir menu" aria-expanded="false">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu mobile -->
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-72 bg-dark-soft shadow-2xl md:hidden z-50 pt-24 px-6">
+      <nav class="flex flex-col gap-6" aria-label="Menu mobile">
+        <a href="#home" class="nav-link text-lg font-medium">Home</a>
+        <a href="#sobre" class="nav-link text-lg font-medium">Sobre</a>
+        <a href="#servicos" class="nav-link text-lg font-medium">Serviços</a>
+        <a href="#diferenciais" class="nav-link text-lg font-medium">Diferenciais</a>
+        <a href="#contato" class="nav-link text-lg font-medium">Contato</a>
+        <a href="https://wa.me/554789181395?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener noreferrer" class="btn-gold px-5 py-3 rounded-lg text-center text-sm mt-4">Solicitar Orçamento</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== CARROSSEL (HOME) ========== -->
+    <section id="home" class="carousel" aria-label="Destaques Morbert Engenharia">
+
+      <div id="carousel-track" class="carousel-track">
+
+      <!-- Slide 1 -->
+      <div class="carousel-slide">
+        <img src="imagens/capa.png" alt="Obra em andamento — Morbert Engenharia">
+        <div class="carousel-overlay absolute inset-0"></div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="carousel-slide">
+        <img src="imagens/capa2.png" alt="Reforma residencial de alto padrão">
+        <div class="carousel-overlay absolute inset-0"></div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="carousel-slide">
+        <img src="imagens/capa3.png" alt="Projeto de construção Morbert">
+        <div class="carousel-overlay absolute inset-0"></div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="carousel-slide">
+        <img src="imagens/capa4.png" alt="Reforma e acabamento de qualidade">
+        <div class="carousel-overlay absolute inset-0"></div>
+      </div>
+
+      </div>
+
+      <!-- Conteúdo sobre o carrossel -->
+      <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+        <div class="carousel-content text-center px-4 max-w-3xl">
+          <p class="text-gold-light text-sm sm:text-base font-medium tracking-[0.3em] uppercase mb-4">
+            Engenharia de Excelência
+          </p>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+            Construções e<br>
+            <span class="text-gold-light">Reformas</span>
+          </h1>
+          <p class="text-gray-300 text-lg sm:text-xl mb-10 max-w-xl mx-auto">
+            Transformamos projetos em realidade com qualidade, segurança e compromisso em cada detalhe.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center pointer-events-auto">
+            <a href="https://wa.me/554789181395?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener noreferrer" class="btn-gold px-8 py-3.5 rounded-lg text-base">
+              Solicitar Orçamento
+            </a>
+            <a href="#servicos" class="btn-outline-gold px-8 py-3.5 rounded-lg text-base">
+              Nossos Serviços
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botões de navegação -->
+      <button id="carousel-prev" class="carousel-btn absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center" aria-label="Slide anterior">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <button id="carousel-next" class="carousel-btn absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full flex items-center justify-center" aria-label="Próximo slide">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+
+      <!-- Indicadores -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3" role="tablist" aria-label="Slides do carrossel">
+        <button class="carousel-dot active" aria-label="Slide 1" role="tab"></button>
+        <button class="carousel-dot" aria-label="Slide 2" role="tab"></button>
+        <button class="carousel-dot" aria-label="Slide 3" role="tab"></button>
+        <button class="carousel-dot" aria-label="Slide 4" role="tab"></button>
+      </div>
+    </section>
+
+    <!-- ========== SOBRE ========== -->
+    <section id="sobre" class="py-20 lg:py-28 bg-dark-soft">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+          <div class="reveal">
+            <img src="imagens/logo.png" alt="Morbert Engenharia" class="w-full max-w-md mx-auto lg:mx-0 rounded-2xl">
+          </div>
+
+          <div class="reveal">
+            <h2 class="section-title text-3xl sm:text-4xl font-bold text-white mb-6">
+              Sobre a Morbert
+            </h2>
+            <p class="text-gray-400 leading-relaxed mb-4">
+              A <strong class="text-gold-light">Morbert Engenharia</strong> é especializada em construções e reformas,
+              oferecendo soluções completas para projetos residenciais e comerciais.
+            </p>
+            <p class="text-gray-400 leading-relaxed mb-4">
+              Com uma equipe qualificada e comprometida, entregamos obras com alto padrão de qualidade,
+              respeitando prazos e orçamentos definidos com nossos clientes.
+            </p>
+            <p class="text-gray-400 leading-relaxed">
+              Nossa missão é transformar sonhos em realidade, construindo espaços que unem
+              funcionalidade, estética e durabilidade.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SERVIÇOS ========== -->
+    <section id="servicos" class="py-20 lg:py-28 bg-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-16 reveal-item">
+          <h2 class="section-title text-3xl sm:text-4xl font-bold text-white mb-4">
+            Nossos Serviços
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Soluções completas em engenharia para atender todas as necessidades do seu projeto.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <article class="service-card reveal-item bg-dark-soft rounded-2xl p-8 border border-white/5">
+            <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Construção Civil</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Obras residenciais e comerciais do zero, com planejamento, execução e entrega dentro do prazo.
+            </p>
+          </article>
+
+          <article class="service-card reveal-item bg-dark-soft rounded-2xl p-8 border border-white/5">
+            <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Reformas</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Reformas completas ou parciais, modernizando ambientes com acabamento de alto padrão.
+            </p>
+          </article>
+
+          <article class="service-card reveal-item bg-dark-soft rounded-2xl p-8 border border-white/5">
+            <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Projetos e Consultoria</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Acompanhamento técnico, orçamentação e gestão de obras para garantir o melhor resultado.
+            </p>
+          </article>
+
+          <article class="service-card reveal-item bg-dark-soft rounded-2xl p-8 border border-white/5">
+            <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Acabamentos</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Pintura, revestimentos, pisos e detalhes finais que valorizam cada ambiente da sua obra.
+            </p>
+          </article>
+
+          <article class="service-card reveal-item bg-dark-soft rounded-2xl p-8 border border-white/5">
+            <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Instalações Elétricas e Hidráulicas</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Instalações seguras e em conformidade com as normas técnicas vigentes.
+            </p>
+          </article>
+
+          <article class="service-card reveal-item bg-dark-soft rounded-2xl p-8 border border-white/5">
+            <div class="service-icon w-14 h-14 rounded-xl flex items-center justify-center mb-6">
+              <svg class="w-7 h-7 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold text-white mb-3">Ampliações</h3>
+            <p class="text-gray-400 text-sm leading-relaxed">
+              Ampliação de imóveis com estrutura segura e integração harmoniosa ao projeto existente.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== DIFERENCIAIS ========== -->
+    <section id="diferenciais" class="py-20 lg:py-28 bg-dark-soft">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-16 reveal-item">
+          <h2 class="section-title text-3xl sm:text-4xl font-bold text-white mb-4">
+            Por que escolher a Morbert?
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Compromisso com a excelência em cada etapa do seu projeto.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div class="reveal-item text-center">
+            <div class="text-4xl font-bold text-gold-light mb-2">+10</div>
+            <p class="text-white font-medium mb-1">Anos de Experiência</p>
+            <p class="text-gray-500 text-sm">Tradição e confiança no mercado</p>
+          </div>
+          <div class="reveal-item text-center">
+            <div class="text-4xl font-bold text-gold-light mb-2">100%</div>
+            <p class="text-white font-medium mb-1">Compromisso</p>
+            <p class="text-gray-500 text-sm">Transparência em cada etapa</p>
+          </div>
+          <div class="reveal-item text-center">
+            <div class="text-4xl font-bold text-gold-light mb-2">+200</div>
+            <p class="text-white font-medium mb-1">Projetos Entregues</p>
+            <p class="text-gray-500 text-sm">Obras concluídas com sucesso</p>
+          </div>
+          <div class="reveal-item text-center">
+            <div class="text-4xl font-bold text-gold-light mb-2">5★</div>
+            <p class="text-white font-medium mb-1">Satisfação</p>
+            <p class="text-gray-500 text-sm">Clientes satisfeitos e indicam</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTATO ========== -->
+    <section id="contato" class="pt-12 pb-8 lg:pt-16 lg:pb-10 bg-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <div class="text-center mb-8 reveal-item">
+          <h2 class="section-title text-3xl sm:text-4xl font-bold text-white mb-4">
+            Entre em Contato
+          </h2>
+          <p class="text-gray-400 max-w-2xl mx-auto">
+            Solicite um orçamento sem compromisso. Estamos prontos para realizar o seu projeto.
+          </p>
+        </div>
+
+        <div class="max-w-xl mx-auto space-y-8">
+            <div class="reveal-item flex items-start gap-4">
+              <div class="service-icon w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-white font-medium mb-1">Telefone / WhatsApp</h3>
+                <p class="text-gray-400">(47) 8918-1395</p>
+              </div>
+            </div>
+
+            <div class="reveal-item flex items-start gap-4">
+              <div class="service-icon w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-white font-medium mb-1">E-mail</h3>
+                <p class="text-gray-400">contato@morbert.com.br</p>
+              </div>
+            </div>
+
+            <div class="reveal-item flex items-start gap-4">
+              <div class="service-icon w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-gold-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-white font-medium mb-1">Localização</h3>
+                <p class="text-gray-400">Rua Maria Marques Leandro, 1100 - Paranaguamirim: Joinville/Santa Catarina.</p>
+              </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center items-center gap-12 mt-8 reveal-item">
+          <a href="https://www.facebook.com/MorbertEngenharia" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+            <img src="imagens/facebook.png" alt="Facebook" class="social-icon">
+          </a>
+          <a href="https://www.instagram.com/servicosmorbertengenharia/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <img src="imagens/instagram.png" alt="Instagram" class="social-icon">
+          </a>
+          <a href="https://wa.me/554789181395?text=Ol%C3%A1!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <img src="imagens/whatsapp.png" alt="WhatsApp" class="social-icon">
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer padrão -->
+  <footer class="bg-dark-soft border-t border-white/5 py-4 text-gray-400 text-sm sm:text-base">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-1 px-4 text-center">
+      <span>&copy; <span id="ano-atual"></span> Morbert Engenharia — Construções e Reformas.</span>
+      <div class="flex items-center gap-1 mt-2 sm:mt-0">
+        <span>Produzido por:</span>
+        <img src="imagens/footerj3.png" alt="Logo J3 Digital Mídia" class="h-6 sm:h-8">
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('ano-atual').textContent = new Date().getFullYear();
+      initCarousel();
+      initHeader();
+      initMobileMenu();
+      initScrollReveal();
+      initSmoothScroll();
+    });
+
+    function initCarousel() {
+      const track = document.getElementById('carousel-track');
+      const slides = document.querySelectorAll('.carousel-slide');
+      const dots = document.querySelectorAll('.carousel-dot');
+      const prevBtn = document.getElementById('carousel-prev');
+      const nextBtn = document.getElementById('carousel-next');
+
+      if (!slides.length || !track) return;
+
+      let currentIndex = 0;
+      let autoplayTimer;
+      const INTERVAL = 5000;
+
+      function goToSlide(index) {
+        dots[currentIndex]?.classList.remove('active');
+
+        currentIndex = (index + slides.length) % slides.length;
+
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        dots[currentIndex]?.classList.add('active');
+      }
+
+      function nextSlide() {
+        goToSlide(currentIndex + 1);
+      }
+
+      function prevSlide() {
+        goToSlide(currentIndex - 1);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        autoplayTimer = setInterval(nextSlide, INTERVAL);
+      }
+
+      function stopAutoplay() {
+        clearInterval(autoplayTimer);
+      }
+
+      prevBtn?.addEventListener('click', () => {
+        prevSlide();
+        startAutoplay();
+      });
+
+      nextBtn?.addEventListener('click', () => {
+        nextSlide();
+        startAutoplay();
+      });
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          goToSlide(i);
+          startAutoplay();
+        });
+      });
+
+      const carousel = document.querySelector('.carousel');
+      carousel?.addEventListener('mouseenter', stopAutoplay);
+      carousel?.addEventListener('mouseleave', startAutoplay);
+
+      startAutoplay();
+    }
+
+    function initHeader() {
+      const header = document.getElementById('header');
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          header?.classList.add('header-scrolled');
+        } else {
+          header?.classList.remove('header-scrolled');
+        }
+      });
+
+      const sections = document.querySelectorAll('section[id]');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach((section) => {
+          const top = section.offsetTop - 100;
+          if (window.scrollY >= top) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+      });
+    }
+
+    function initMobileMenu() {
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const mobileLinks = mobileMenu?.querySelectorAll('a');
+
+      menuBtn?.addEventListener('click', () => {
+        mobileMenu?.classList.toggle('open');
+        const isOpen = mobileMenu?.classList.contains('open');
+        menuBtn.setAttribute('aria-expanded', isOpen);
+      });
+
+      mobileLinks?.forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileMenu?.classList.remove('open');
+          menuBtn?.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+
+    function initScrollReveal() {
+      const staggerSections = document.querySelectorAll('#servicos, #diferenciais, #contato');
+      const STAGGER_DELAY = 120;
+
+      staggerSections.forEach((section) => {
+        const items = section.querySelectorAll('.reveal-item');
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                items.forEach((item, index) => {
+                  setTimeout(() => {
+                    item.classList.add('visible');
+                  }, index * STAGGER_DELAY);
+                });
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+
+        observer.observe(section);
+      });
+
+      const simpleReveals = document.querySelectorAll('#sobre .reveal');
+
+      const simpleObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              simpleObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      simpleReveals.forEach((el) => simpleObserver.observe(el));
+    }
+
+    function initSmoothScroll() {
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', (e) => {
+          const targetId = anchor.getAttribute('href');
+          if (targetId === '#') return;
+
+          const target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>
