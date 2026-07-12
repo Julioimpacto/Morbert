@@ -297,6 +297,10 @@
       overflow: hidden;
     }
 
+    .apresentacao-slide--alt {
+      background-color: var(--cream-soft);
+    }
+
     .apresentacao-watermark {
       position: absolute;
       inset: 0;
@@ -459,6 +463,79 @@
       max-width: 720px;
       margin: 0.75rem auto 0;
     }
+
+    /* Fontes maiores em tablets e PCs — sem alterar paddings das seções */
+    @media (min-width: 768px) {
+      .apresentacao-titulo {
+        font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+      }
+
+      .apresentacao-subtitulo {
+        font-size: clamp(1.15rem, 2vw, 1.4rem);
+      }
+
+      .apresentacao-texto {
+        font-size: 1.05rem;
+      }
+
+      .apresentacao-valor span {
+        font-size: 1.15rem;
+      }
+
+      .apresentacao-solucao-titulo {
+        font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      }
+
+      .apresentacao-solucao-texto {
+        font-size: 0.95rem;
+        max-width: 320px;
+      }
+
+      .apresentacao-rodape,
+      .apresentacao-frase {
+        font-size: 1.1rem;
+      }
+
+      .apresentacao-assinatura {
+        font-size: 1rem;
+      }
+
+      #contato p,
+      #contato address,
+      #contato h3 {
+        font-size: 1.05rem;
+      }
+
+      #contato h2 {
+        font-size: 2.25rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .apresentacao-texto {
+        font-size: 1.1rem;
+      }
+
+      .apresentacao-valor span {
+        font-size: 1.2rem;
+      }
+
+      .apresentacao-solucao-texto {
+        font-size: 1rem;
+        max-width: 340px;
+      }
+
+      .apresentacao-rodape,
+      .apresentacao-frase {
+        font-size: 1.15rem;
+      }
+
+      #contato p,
+      #contato address,
+      #contato h3 {
+        font-size: 1.1rem;
+      }
+    }
   </style>
 </head>
 <body class="bg-cream text-morbert antialiased">
@@ -470,16 +547,16 @@
 
         <!-- Logo -->
         <a href="#home" class="flex-shrink-0">
-          <img id="header-logo" src="imagens/logotrans.png" alt="Morbert Engenharia" class="h-14 w-auto">
+          <img id="header-logo" src="imagens/logo.png" alt="Morbert Engenharia" class="h-16 w-auto">
         </a>
 
         <!-- Navegação desktop -->
         <nav class="hidden md:flex items-center gap-8" aria-label="Menu principal">
-          <a href="#home" class="nav-link text-sm font-medium tracking-wide">Home</a>
-          <a href="#sobre" class="nav-link text-sm font-medium tracking-wide">Sobre</a>
-          <a href="#servicos" class="nav-link text-sm font-medium tracking-wide">Soluções</a>
-          <a href="#diferenciais" class="nav-link text-sm font-medium tracking-wide">Diferenciais</a>
-          <a href="#contato" class="nav-link text-sm font-medium tracking-wide">Contato</a>
+          <a href="#home" class="nav-link text-base font-medium tracking-wide">Home</a>
+          <a href="#sobre" class="nav-link text-base font-medium tracking-wide">Sobre</a>
+          <a href="#servicos" class="nav-link text-base font-medium tracking-wide">Soluções</a>
+          <a href="#diferenciais" class="nav-link text-base font-medium tracking-wide">Diferenciais</a>
+          <a href="#contato" class="nav-link text-base font-medium tracking-wide">Contato</a>
         </nav>
 
         <!-- CTA desktop -->
@@ -703,7 +780,7 @@
     </section>
 
     <!-- ========== NOSSAS SOLUÇÕES ========== -->
-    <section id="servicos" class="apresentacao-slide py-16 lg:py-24">
+    <section id="servicos" class="apresentacao-slide apresentacao-slide--alt py-16 lg:py-24">
       <div class="apresentacao-watermark" aria-hidden="true"></div>
 
       <svg class="apresentacao-corner apresentacao-corner--tr" viewBox="0 0 140 140" fill="none" aria-hidden="true">
@@ -830,7 +907,12 @@
           </p>
         </div>
 
-        <div class="max-w-xl mx-auto space-y-8">
+        <div class="grid md:grid-cols-2 gap-10 lg:gap-16 items-center max-w-5xl mx-auto">
+          <div class="reveal-item flex justify-center md:justify-end">
+            <img src="imagens/logo.png" alt="Morbert Engenharia" class="h-64 sm:h-80 lg:h-96 w-auto">
+          </div>
+
+          <div class="space-y-8">
             <div class="reveal-item flex items-start gap-4">
               <div class="service-icon w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-gold-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -840,6 +922,7 @@
               <div>
                 <h3 class="text-morbert font-medium mb-1">Telefone / WhatsApp</h3>
                 <p class="text-morbert-muted">(13) 99183-0035</p>
+                <p class="text-morbert-muted">(47) 99648-1013</p>
               </div>
             </div>
 
@@ -877,6 +960,7 @@
                 </a>
               </div>
             </div>
+          </div>
         </div>
 
         <div class="flex justify-center items-center gap-12 mt-8 reveal-item">
@@ -898,7 +982,7 @@
   <!-- Footer padrão -->
   <footer class="bg-black py-4 text-white text-sm sm:text-base">
     <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-1 px-4 text-center">
-      <span>&copy; <span id="ano-atual"></span> Morbert Engenharia — Construções e Reformas. Todos os direitos reservados.</span>
+      <span>&copy; <span id="ano-atual"></span> Morbert Engenharia.</span>
       <div class="flex items-center gap-1 mt-2 sm:mt-0">
         <span>Produzido por:</span>
         <img src="imagens/footerj3.png" alt="Logo J3 Digital Mídia" class="h-6 sm:h-8">
@@ -981,15 +1065,12 @@
 
     function initHeader() {
       const header = document.getElementById('header');
-      const logo = document.getElementById('header-logo');
 
       function updateHeader() {
         if (window.scrollY > 50) {
           header?.classList.add('header-scrolled');
-          if (logo) logo.src = 'imagens/logo.png';
         } else {
           header?.classList.remove('header-scrolled');
-          if (logo) logo.src = 'imagens/logotrans.png';
         }
       }
 
